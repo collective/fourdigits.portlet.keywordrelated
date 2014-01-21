@@ -12,8 +12,14 @@
             tal:attributes="
                 class python: isOdd and 'portletItem odd' or 'portletItem'">
             <a tal:attributes="href item/getURL;
-                               title item/Description;"
+                               title item/Description | nothing;"
                 tal:content="item/Title">[Related item title]</a>
+            <tal:ifDescription tal:condition="item/Description | nothing">
+                <br />
+                <span class="description"
+                    tal:content="item/Description">[description]</span>
+                <a class="more">Read more&hellip;</a>
+            </tal:ifDescription>
         </dd>
     </tal:loopItems>
 
