@@ -7,11 +7,18 @@
         <span class="portletTopRight"></span>
     </dt>
 
-    <dd class="portletItem odd">
-        Body text
-    </dd>
+    <tal:loopItems tal:omit-tag="" tal:repeat="item view/items">
+        <dd tal:define="isOdd repeat/item/odd"
+            tal:attributes="
+                class python: isOdd and 'portletItem odd' or 'portletItem'">
+            <a tal:attributes="href item/getURL;
+                               title item/Description;"
+                tal:content="item/Title">[Related item title]</a>
+        </dd>
+    </tal:loopItems>
 
-    <dd class="portletFooter">
+    <dd tal:condition="view/show_footer"
+        class="portletFooter">
         <span class="portletBottomLeft"></span>
         Footer
         <span class="portletBottomRight"></span>

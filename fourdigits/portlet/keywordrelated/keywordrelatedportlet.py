@@ -1,18 +1,12 @@
-from zope.interface import implements
-
-from plone.portlets.interfaces import IPortletDataProvider
-from plone.app.portlets.portlets import base
-
-# TODO: If you define any fields for the portlet configuration schema below
-# do not forget to uncomment the following import
-#from zope import schema
-from zope.formlib import form
-
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-
-# TODO: If you require i18n translation for any of your schema fields below,
-# uncomment the following to import your package MessageFactory
-#from fourdigits.portlet.keywordrelated import KeywordRelatedPortletMessageFactory as _
+from fourdigits.portlet.keywordrelated import \
+    KeywordRelatedPortletMessageFactory as _
+from plone.app.portlets.portlets import base
+from plone.portlets.interfaces import IPortletDataProvider
+from zope import schema
+from zope.formlib import form
+from zope.interface import implements
 
 
 class IKeywordRelatedPortlet(IPortletDataProvider):
@@ -23,14 +17,12 @@ class IKeywordRelatedPortlet(IPortletDataProvider):
     same.
     """
 
-    # TODO: Add any zope.schema fields here to capture portlet configuration
-    # information. Alternatively, if there are no settings, leave this as an
-    # empty interface - see also notes around the add form and edit form
-    # below.
-
-    # some_field = schema.TextLine(title=_(u"Some field"),
-    #                              description=_(u"A field to use"),
-    #                              required=True)
+    nr_items = schema.Int(
+        title=_(u"Number of items"),
+        description=_(u"Number of items to show in the portlet"),
+        required=True,
+        default=5,
+    )
 
 
 class Assignment(base.Assignment):
@@ -42,16 +34,8 @@ class Assignment(base.Assignment):
 
     implements(IKeywordRelatedPortlet)
 
-    # TODO: Set default values for the configurable parameters here
-
-    # some_field = u""
-
-    # TODO: Add keyword parameters for configurable parameters here
-    # def __init__(self, some_field=u""):
-    #    self.some_field = some_field
-
-    def __init__(self):
-        pass
+    def __init__(self, nr_items=5):
+        self.nr_items = nr_items
 
     @property
     def title(self):
@@ -71,6 +55,28 @@ class Renderer(base.Renderer):
 
     render = ViewPageTemplateFile('keywordrelatedportlet.pt')
 
+    def items(self):
+        """Query the catalog for items with the same tags as the context.
+        """
+        context = self.context
+        nr_items = self.data.nr_items
+        catalog = getToolByName(context, 'portal_catalog')
+        keywords = context.Subject()
+        query = {
+            'Subject': keywords,
+            'sort_limit': nr_items + 1,  # account for context
+        }
+        brains = catalog.searchResults(**query)
+        brains = brains[:nr_items + 1]
+        # filter the current context
+        brains = [b for b in brains if b.getURL() != context.absolute_url()]
+        return brains[:nr_items]
+
+    def show_footer(self):
+        """TODO: make this selectable in the portlet add/edit form
+        """
+        return False
+
 
 class AddForm(base.AddForm):
     """Portlet add form.
@@ -83,21 +89,6 @@ class AddForm(base.AddForm):
 
     def create(self, data):
         return Assignment(**data)
-
-
-# NOTE: If this portlet does not have any configurable parameters, you
-# can use the next AddForm implementation instead of the previous.
-
-# class AddForm(base.NullAddForm):
-#     """Portlet add form.
-#     """
-#     def create(self):
-#         return Assignment()
-
-
-# NOTE: If this portlet does not have any configurable parameters, you
-# can remove the EditForm class definition and delete the editview
-# attribute from the <plone:portlet /> registration in configure.zcml
 
 
 class EditForm(base.EditForm):
