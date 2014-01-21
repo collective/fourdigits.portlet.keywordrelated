@@ -1,9 +1,9 @@
 <dl class="portlet portletKeywordRelatedPortlet"
-    i18n:domain="fourdigits.portlets.keywordrelated">
+    i18n:domain="fourdigits.portlet.keywordrelated">
 
     <dt class="portletHeader">
         <span class="portletTopLeft"></span>
-        Header
+        Related Items
         <span class="portletTopRight"></span>
     </dt>
 

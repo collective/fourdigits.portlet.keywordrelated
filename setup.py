@@ -3,7 +3,7 @@ import os
 
 version = '0.1'
 
-setup(name='fourdigits.portlets.keywordrelated',
+setup(name='fourdigits.portlet.keywordrelated',
       version=version,
       description="A portlet showing related items, based on the current contexts tags.",
       long_description=open("README.rst").read() + "\n" +
@@ -20,7 +20,7 @@ setup(name='fourdigits.portlets.keywordrelated',
       url='http://svn.plone.org/svn/collective/',
       license='gpl',
       packages=find_packages(exclude=['ez_setup']),
-      namespace_packages=['fourdigits', 'fourdigits.portlets'],
+      namespace_packages=['fourdigits', 'fourdigits.portlet'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[

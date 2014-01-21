@@ -12,7 +12,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 # TODO: If you require i18n translation for any of your schema fields below,
 # uncomment the following to import your package MessageFactory
-#from fourdigits.portlets.keywordrelated import KeywordRelatedPortletMessageFactory as _
+#from fourdigits.portlet.keywordrelated import KeywordRelatedPortletMessageFactory as _
 
 
 class IKeywordRelatedPortlet(IPortletDataProvider):

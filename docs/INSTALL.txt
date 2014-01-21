@@ -1,27 +1,27 @@
-fourdigits.portlets.keywordrelated Installation
+fourdigits.portlet.keywordrelated Installation
 =======================
 
  * When you're reading this you have probably already run
-   ``easy_install fourdigits.portlets.keywordrelated``. Find out how to install setuptools
+   ``easy_install fourdigits.portlet.keywordrelated``. Find out how to install setuptools
    (and EasyInstall) here:
    http://peak.telecommunity.com/DevCenter/EasyInstall
 
- * Create a file called ``fourdigits.portlets.keywordrelated-configure.zcml`` in the
+ * Create a file called ``fourdigits.portlet.keywordrelated-configure.zcml`` in the
    ``/path/to/instance/etc/package-includes`` directory.  The file
    should only contain this::
 
-       <include package="fourdigits.portlets.keywordrelated" />
+       <include package="fourdigits.portlet.keywordrelated" />
 
 Alternatively, if you are using zc.buildout and the plone.recipe.zope2instance
 recipe to manage your project, you can do this:
 
- * Add ``fourdigits.portlets.keywordrelated`` to the list of eggs to install, e.g.:
+ * Add ``fourdigits.portlet.keywordrelated`` to the list of eggs to install, e.g.:
 
     [buildout]
     ...
     eggs =
         ...
-        fourdigits.portlets.keywordrelated
+        fourdigits.portlet.keywordrelated
 
   * Tell the plone.recipe.zope2instance recipe to install a ZCML slug:
 
@@ -29,7 +29,7 @@ recipe to manage your project, you can do this:
     recipe = plone.recipe.zope2instance
     ...
     zcml =
-        fourdigits.portlets.keywordrelated
+        fourdigits.portlet.keywordrelated
 
   * Re-run buildout, e.g. with:
 

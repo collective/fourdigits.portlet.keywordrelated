@@ -4,7 +4,7 @@
  <!-- Portlet type registrations -->
 
  <portlet
-   addview="fourdigits.portlets.keywordrelated.KeywordRelatedPortlet"
+   addview="fourdigits.portlet.keywordrelated.KeywordRelatedPortlet"
    title="Tag-based related items"
    description="A portlet showing related items, based on the current contexts tags."
    />

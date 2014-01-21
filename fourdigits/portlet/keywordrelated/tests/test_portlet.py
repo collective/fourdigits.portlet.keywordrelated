@@ -8,9 +8,9 @@ from plone.portlets.interfaces import IPortletRenderer
 
 from plone.app.portlets.storage import PortletAssignmentMapping
 
-from fourdigits.portlets.keywordrelated import keywordrelatedportlet
+from fourdigits.portlet.keywordrelated import keywordrelatedportlet
 
-from fourdigits.portlets.keywordrelated.tests.base import TestCase
+from fourdigits.portlet.keywordrelated.tests.base import TestCase
 
 
 class TestPortlet(TestCase):
@@ -21,9 +21,9 @@ class TestPortlet(TestCase):
     def test_portlet_type_registered(self):
         portlet = getUtility(
             IPortletType,
-            name='fourdigits.portlets.keywordrelated.KeywordRelatedPortlet')
+            name='fourdigits.portlet.keywordrelated.KeywordRelatedPortlet')
         self.assertEquals(portlet.addview,
-                          'fourdigits.portlets.keywordrelated.KeywordRelatedPortlet')
+                          'fourdigits.portlet.keywordrelated.KeywordRelatedPortlet')
 
     def test_interfaces(self):
         # TODO: Pass any keyword arguments to the Assignment constructor
@@ -34,7 +34,7 @@ class TestPortlet(TestCase):
     def test_invoke_add_view(self):
         portlet = getUtility(
             IPortletType,
-            name='fourdigits.portlets.keywordrelated.KeywordRelatedPortlet')
+            name='fourdigits.portlet.keywordrelated.KeywordRelatedPortlet')
         mapping = self.portal.restrictedTraverse(
             '++contextportlets++plone.leftcolumn')
         for m in mapping.keys():
