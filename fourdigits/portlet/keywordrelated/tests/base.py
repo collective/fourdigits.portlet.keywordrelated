@@ -18,21 +18,21 @@ def setup_product():
     # Load the ZCML configuration for this package and its dependencies
 
     fiveconfigure.debug_mode = True
-    import fourdigits.portlets.keywordrelated
-    zcml.load_config('configure.zcml', fourdigits.portlets.keywordrelated)
+    import fourdigits.portlet.keywordrelated
+    zcml.load_config('configure.zcml', fourdigits.portlet.keywordrelated)
     fiveconfigure.debug_mode = False
 
     # We need to tell the testing framework that these products
     # should be available. This can't happen until after we have loaded
     # the ZCML.
 
-    ztc.installPackage('fourdigits.portlets.keywordrelated')
+    ztc.installPackage('fourdigits.portlet.keywordrelated')
 
 # The order here is important: We first call the deferred function and then
 # let PloneTestCase install it during Plone site setup
 
 setup_product()
-ptc.setupPloneSite(products=['fourdigits.portlets.keywordrelated'])
+ptc.setupPloneSite(products=['fourdigits.portlet.keywordrelated'])
 
 
 class TestCase(ptc.PloneTestCase):
