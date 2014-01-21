@@ -9,9 +9,9 @@
 
     <genericsetup:registerProfile
        name="default"
-       title="Tag-based related items"
+       title="Tag-based related items portlet"
        directory="profiles/default"
-       description="A portlet showing related items, based on the current contexts tags."
+       description="A portlet showing related items, based on the current context's keywords."
        provides="Products.GenericSetup.interfaces.EXTENSION"
        />
 
