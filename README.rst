@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.org/collective/fourdigits.portlet.keywordrelated.png
+  :target: https://travis-ci.org/collective/fourdigits.portlet.keywordrelated
+
+.. image:: https://coveralls.io/repos/collective/fourdigits.portlet.keywordrelated/badge.png
+  :target: https://coveralls.io/r/collective/fourdigits.portlet.keywordrelated
+
 .. contents::
 
 Introduction
