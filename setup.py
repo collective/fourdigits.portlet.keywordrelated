@@ -5,19 +5,20 @@ version = '0.2.dev0'
 
 setup(name='fourdigits.portlet.keywordrelated',
       version=version,
-      description="A portlet showing related items, based on the current contexts tags.",
+      description="A portlet showing related items, "
+                  "based on the current contexts tags.",
       long_description=open("README.rst").read() + "\n" +
                        open(os.path.join("CHANGES.txt")).read(),
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
-        "Framework :: Plone",
-        "Programming Language :: Python",
-        ],
+          "Framework :: Plone",
+          "Programming Language :: Python",
+      ],
       keywords='',
       author='Four Digits',
       author_email='info@fourdigits.nl',
-      url='http://svn.plone.org/svn/collective/',
+      url='https://github.com/collective/fourdigits.portlet.keywordrelated',
       license='gpl',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['fourdigits', 'fourdigits.portlet'],
