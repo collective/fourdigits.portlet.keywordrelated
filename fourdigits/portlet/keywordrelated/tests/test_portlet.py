@@ -1,16 +1,15 @@
-from zope.component import getUtility, getMultiAdapter
-
+from fourdigits.portlet.keywordrelated import keywordrelatedportlet
+from fourdigits.portlet.keywordrelated.tests.base import TestCase
+from plone.app.portlets.storage import PortletAssignmentMapping
 from plone.portlets.interfaces import IPortletType
 from plone.portlets.interfaces import IPortletManager
 from plone.portlets.interfaces import IPortletAssignment
 from plone.portlets.interfaces import IPortletDataProvider
 from plone.portlets.interfaces import IPortletRenderer
+from zope.component import getUtility, getMultiAdapter
 
-from plone.app.portlets.storage import PortletAssignmentMapping
-
-from fourdigits.portlet.keywordrelated import keywordrelatedportlet
-
-from fourdigits.portlet.keywordrelated.tests.base import TestCase
+assignment_keywords = {'nr_items': 3}
+class_name = 'fourdigits.portlet.keywordrelated.KeywordRelatedPortlet'
 
 
 class TestPortlet(TestCase):
@@ -21,38 +20,31 @@ class TestPortlet(TestCase):
     def test_portlet_type_registered(self):
         portlet = getUtility(
             IPortletType,
-            name='fourdigits.portlet.keywordrelated.KeywordRelatedPortlet')
-        self.assertEquals(portlet.addview,
-                          'fourdigits.portlet.keywordrelated.KeywordRelatedPortlet')
+            name=class_name)
+        self.assertEquals(portlet.addview, class_name)
 
     def test_interfaces(self):
-        # TODO: Pass any keyword arguments to the Assignment constructor
-        portlet = keywordrelatedportlet.Assignment()
+        portlet = keywordrelatedportlet.Assignment(**assignment_keywords)
         self.failUnless(IPortletAssignment.providedBy(portlet))
         self.failUnless(IPortletDataProvider.providedBy(portlet.data))
 
     def test_invoke_add_view(self):
         portlet = getUtility(
             IPortletType,
-            name='fourdigits.portlet.keywordrelated.KeywordRelatedPortlet')
+            name=class_name)
         mapping = self.portal.restrictedTraverse(
             '++contextportlets++plone.leftcolumn')
         for m in mapping.keys():
             del mapping[m]
         addview = mapping.restrictedTraverse('+/' + portlet.addview)
 
-        # TODO: Pass a dictionary containing dummy form inputs from the add
-        # form.
-        # Note: if the portlet has a NullAddForm, simply call
-        # addview() instead of the next line.
-        addview.createAndAdd(data={})
+        addview.createAndAdd(data=assignment_keywords)
 
         self.assertEquals(len(mapping), 1)
         self.failUnless(isinstance(mapping.values()[0],
                                    keywordrelatedportlet.Assignment))
 
     def test_invoke_edit_view(self):
-        # NOTE: This test can be removed if the portlet has no edit form
         mapping = PortletAssignmentMapping()
         request = self.folder.REQUEST
 
@@ -67,8 +59,7 @@ class TestPortlet(TestCase):
         manager = getUtility(IPortletManager, name='plone.rightcolumn',
                              context=self.portal)
 
-        # TODO: Pass any keyword arguments to the Assignment constructor
-        assignment = keywordrelatedportlet.Assignment()
+        assignment = keywordrelatedportlet.Assignment(assignment_keywords)
 
         renderer = getMultiAdapter(
             (context, request, view, manager, assignment), IPortletRenderer)
@@ -88,20 +79,19 @@ class TestRenderer(TestCase):
         manager = manager or getUtility(
             IPortletManager, name='plone.rightcolumn', context=self.portal)
 
-        # TODO: Pass any default keyword arguments to the Assignment
-        # constructor.
-        assignment = assignment or keywordrelatedportlet.Assignment()
+        assignment = assignment or \
+            keywordrelatedportlet.Assignment(assignment_keywords)
         return getMultiAdapter((context, request, view, manager, assignment),
                                IPortletRenderer)
 
     def test_render(self):
-        # TODO: Pass any keyword arguments to the Assignment constructor.
         r = self.renderer(context=self.portal,
-                          assignment=keywordrelatedportlet.Assignment())
+                          assignment=keywordrelatedportlet.Assignment(
+                              **assignment_keywords))
         r = r.__of__(self.folder)
         r.update()
-        #output = r.render()
-        # TODO: Test output
+        output = r.render()
+        self.assertIn('Related Items', output)
 
 
 def test_suite():
