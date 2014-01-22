@@ -5,8 +5,8 @@ Changelog
 ----------------
 
 - Make tests more comprehensive.
-
 - Use Plone's default portlet layout for items.
+- Only render the portlet if the context has keywords.
 
 
 0.2 (2014-01-21)

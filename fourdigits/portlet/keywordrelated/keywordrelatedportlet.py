@@ -55,6 +55,12 @@ class Renderer(base.Renderer):
 
     render = ViewPageTemplateFile('keywordrelatedportlet.pt')
 
+    @property
+    def available(self):
+        """Only render the portlet if the context has keywords.
+        """
+        return self.context.Subject()
+
     def items(self):
         """Query the catalog for items with the same tags as the context.
         """
